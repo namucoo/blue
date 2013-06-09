@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jetty.util.ajax.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.mapper.JsonMapper;
 
+import com.skymusic.blue.constant.Constant;
+import com.skymusic.blue.constant.ResultCode;
+import com.skymusic.blue.entity.MobileSession;
 import com.skymusic.blue.entity.Resource;
+import com.skymusic.blue.entity.User;
+import com.skymusic.blue.result.Result;
+import com.skymusic.blue.service.account.AccountService;
+import com.skymusic.blue.service.account.MobileAccountService;
 import com.skymusic.blue.service.resources.ResourceService;
-import com.skymusic.blue.service.task.TaskService;
 
 /**
  * 
@@ -36,6 +41,12 @@ public class MobileLoginController {
 	@Autowired
 	private ResourceService skyResourceService;
 	
+	@Autowired
+	private MobileAccountService mobileAccountService;
+	
+	@Autowired
+	private AccountService accountService;
+	
 	@RequestMapping(value = "get",method = RequestMethod.GET)
 	@ResponseBody
 	public Object login() {
@@ -51,7 +62,21 @@ public class MobileLoginController {
 	@RequestMapping(value = "login",method = RequestMethod.GET)
 	@ResponseBody
 	public String login(@RequestParam String loginid,@RequestParam String password) {
-		Map<String, String> map = Collections.singletonMap("content", "<p>Hello World!</p>");
-		return mapper.toJson(map);
+		User loginUser = accountService.findUserByLoginName(loginid);
+		Result re= new Result(false);
+		if(loginUser == null){
+			re.put(Constant.errorMsg, ResultCode.user_not_exist);
+		}
+		if(!mobileAccountService.correctUser(loginUser, password)){
+			re.put(Constant.errorMsg, ResultCode.password_error);
+		}else{
+			MobileSession session = mobileAccountService.Login(loginUser);
+			re.put(Constant.loginName, loginUser.getLoginName());
+			re.put(Constant.user_session, session.getSessionId());
+			re.put(Constant.errorMsg, ResultCode.success);
+			re.setSuccess(true);
+		}
+	
+		return mapper.toJson(re);
 	}
 }

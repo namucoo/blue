@@ -6,7 +6,8 @@ drop table if exists sky_resource;
 create table sky_mobilesession (
 	id bigint auto_increment,
 	user_id bigint not null,
-	mobilesession varchar(32) not null,
+	session_id varchar(255) not null,
+	session_time timestamp not null default 0,
     primary key (id)
 ) engine=InnoDB;
 
