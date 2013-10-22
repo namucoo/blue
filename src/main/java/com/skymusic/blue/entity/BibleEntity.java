@@ -7,11 +7,22 @@ import javax.persistence.Table;
 @Table(name = "sky_bible")
 public class BibleEntity  extends IdEntity   {
 
-	private String testament ;
+    private String book ;
+	
+
+    private String testament ;
 	private String chapter ;
 	private String stage ;
 	private String sentence;
 	
+    public String getBook() {
+        return book;
+    }
+    
+    public void setBook(String book) {
+        this.book = book;
+    }
+    
 	public String getTestament() {
 		return testament;
 	}

@@ -1,6 +1,5 @@
 package com.skymusic.blue.service.account;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +12,8 @@ import com.skymusic.blue.result.Result;
 @Component
 public class MemberService {
 
+	@Autowired
+	MobileAccountService mobileAccountService;
 	
 	@Autowired
 	private AccountService accountService;
@@ -24,9 +25,13 @@ public class MemberService {
 		if(loginUser == null){
 			re.put(Constant.errorMsg, ResultCode.user_not_exist);
 		}
-		if(!accountService.correctUser(loginUser, password)){
+		if(!mobileAccountService.correctUser(loginUser, password)){
 			re.put(Constant.errorMsg, ResultCode.password_error);
 		}else{
+			MobileSession session = mobileAccountService.Login(loginUser);
+			re.put(Constant.loginName, loginUser.getLoginName());
+			re.put(Constant.user_session, session.getSessionId());
+			re.put(Constant.errorMsg, ResultCode.success);
 			re.setSuccess(true);
 		}
 		return re;
@@ -38,32 +43,39 @@ public class MemberService {
 		if(loginUser == null){
 			re.put(Constant.errorMsg, ResultCode.user_not_exist);
 		}
-		if(!accountService.correctUser(loginUser, oldPassword)){
+		if(!mobileAccountService.correctUser(loginUser, oldPassword)){
 			re.put(Constant.errorMsg, ResultCode.password_error);
 		}else{
 			//change password
 			loginUser.setPlainPassword(newPassword);
 			accountService.updateUser(loginUser);
+			MobileSession session = mobileAccountService.Login(loginUser);
+			re.put(Constant.loginName, loginUser.getLoginName());
+			re.put(Constant.user_session, session.getSessionId());
+			re.put(Constant.errorMsg, ResultCode.success);
 			re.setSuccess(true);
 		}
 		return re;
 	}
 	
-	public Result register(String loginName,String email,String password){
+	public Result register(String loginName,String password){
 		User loginUser = accountService.findUserByLoginName(loginName);
 		Result re= new Result(false);
 		if(loginUser != null){
 			re.put(Constant.errorMsg, ResultCode.user_exist);
-		}else if(StringUtils.isBlank(email) || StringUtils.isBlank(password)){
-		    re.put(Constant.errorMsg, ResultCode.user_info_error);
-		}else{
-		    User newUser= new User();
-		    newUser.setLogin_name(loginName);
-		    newUser.setPlainPassword(password);
-		    newUser.setEmail(email);
-		    accountService.registerUser(newUser);
-		    re.setSuccess(true);
 		}
+//		if(!mobileAccountService.correctUser(loginUser, oldPassword)){
+//			re.put(Constant.errorMsg, ResultCode.password_error);
+//		}else{
+//			//change password
+//			loginUser.setPlainPassword(newPassword);
+//			accountService.updateUser(loginUser);
+//			MobileSession session = mobileAccountService.Login(loginUser);
+//			re.put(Constant.loginName, loginUser.getLoginName());
+//			re.put(Constant.user_session, session.getSessionId());
+//			re.put(Constant.errorMsg, ResultCode.success);
+//			re.setSuccess(true);
+//		}
 		return re;
 	}
 }

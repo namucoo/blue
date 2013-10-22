@@ -31,7 +31,42 @@ public class MusicService {
 	public List<Music> getAllMusic() {
 		return (List<Music>) musicDao.findAll();
 	}
+	
+	public List<String> getAllCat(){
+	    return musicDao.findCategory();
+	}
 
+	public List<Music> getMusicByCat(String catgory){
+	    return musicDao.findByCategory(catgory);
+	}
+	
+	public List<Music> getVideoMusicByCat(String catgory){
+	        return musicDao.findByCategoryAndVideo_urlNotNull(catgory);
+	    }
+	
+	public Music getMusicByTitle(String title){
+        return musicDao.findByTitle(title);
+    }
+	
+	   public Music getVideoMusicByTitle(String title){
+	        return musicDao.findByTitleAndVideo_urlNotNull(title);
+	    }
+	
+	   public List<Music>   getMusicByTone(String tone){
+	        return musicDao.findByToneLike("%"+tone+"%");
+	    }
+	   
+       public List<Music>   getVideoMusicByTone(String tone){
+           return musicDao.findByVideo_urlNotNullAndToneLike("%"+tone+"%");
+       }
+	
+	   public List<Music>   getMusicByFirstsong(String firstsong){
+           return musicDao.findByFirstsongLike("%"+firstsong+"%");
+       }
+	   
+       public List<Music>   getVideoMusicByFirstsong(String firstsong){
+           return musicDao.findByVideo_urlNotNullAndFirstsongLike("%"+firstsong+"%");
+       }
 //	public Page<Music> getUserMusic(Long userId, Map<String, Object> searchParams, int pageNumber, int pageSize,
 //			String sortType) {
 //		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);

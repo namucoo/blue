@@ -1,6 +1,7 @@
 package com.skymusic.blue.entity;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "sky_rite_schedule")
 public class RiteSchedule extends IdEntity  {
 	
-	private Date gmtCreate;
+	private Date gmt_create;
 	private String ritetype;
 	private String riteschedule;
 	private String title;
@@ -26,13 +27,13 @@ public class RiteSchedule extends IdEntity  {
 		this.title = title;
 	}
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-	public Date getGmtCreate() {
-		return gmtCreate;
+
+	public Date getGmt_create() {
+		return gmt_create;
 	}
 
-	public void setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
+	public void setGmt_create(Date gmt_create) {
+		this.gmt_create = gmt_create;
 	}
 
 

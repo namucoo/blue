@@ -4,24 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import com.skymusic.blue.entity.PreyEntity;
 import com.skymusic.blue.entity.ShareEntity;
+import com.skymusic.blue.repository.MobileUserDao;
 import com.skymusic.blue.repository.ShareDao;
-import com.skymusic.blue.repository.UserDao;
-import com.skymusic.blue.service.utils.SkyRequestUtils;
 
 @Component
 public class ShareService {
 
     private ShareDao shareDao;
-    private UserDao  userDao;
+    private MobileUserDao  mobileUserDao;
 
     public void sendShare(String userName, String memo) {
         ShareEntity entity = new ShareEntity();
-        entity.setUser(userDao.findByLogin_name(userName));
+        entity.setMobileUser(mobileUserDao.findByLoginname(userName));
         entity.setMemo(memo);
         entity.setSelected("n");
         shareDao.save(entity);
@@ -52,7 +49,7 @@ public class ShareService {
     }
 
     @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public void setMobileUserDao(MobileUserDao mobileUserDao) {
+        this.mobileUserDao = mobileUserDao;
     }
 }

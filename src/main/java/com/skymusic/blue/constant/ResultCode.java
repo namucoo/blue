@@ -16,6 +16,10 @@ public class ResultCode {
 	
 	public static String all_bible_empty = "ALL_BIBLE_EMPTY";
 	
+	public static String all_testament_empty = "ALL_TESTAMENT_EMPTY";
+	
+	public static String all_chapter_empty = "ALL_CHAPTER_EMPTY";
+	
 	public static String all_empty = "ALL_EMPTY";
 	
 }

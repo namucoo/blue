@@ -9,8 +9,14 @@ public class Constant {
     public static String       user_session = "USER_SESSION";
 
     public static String       all_music    = "ALL_MUSIC";
+    
+    public static String       all_cat    = "ALL_CATEGORY";
 
     public static String       all_bible    = "ALL_BIBLE";
+    
+    public static String       all_testament    = "ALL_TESTAMENT";
+    
+    public static String       all_chapter   = "ALL_CHAPTER";
 
     public static String       all_rite     = "ALL_RITE";
 

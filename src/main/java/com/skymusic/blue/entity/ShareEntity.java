@@ -14,18 +14,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class ShareEntity extends IdEntity{
 
 	private Date gmtCreate;
-	private Date gmtModified;
+
 	private String selected;
 	private String memo;
-	private User user ;
+	private MobileUser mobileUser ;
 	
 	@ManyToOne
-	@JoinColumn(name = "login_name")
-	public User getUser() {
-		return user;
+	@JoinColumn(name = "username")
+	public MobileUser getMobileUser() {
+		return mobileUser;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setMobileUser(MobileUser mobileUser) {
+		this.mobileUser = mobileUser;
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
@@ -37,14 +37,7 @@ public class ShareEntity extends IdEntity{
 		this.gmtCreate = gmtCreate;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-	public Date getGmtModified() {
-		return gmtModified;
-	}
-	
-	public void setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-	}
+
 	
 	public String getSelected() {
 		return selected;

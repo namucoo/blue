@@ -25,15 +25,15 @@ public class PreyShareController {
     
     @RequestMapping(value = "/prey/getprey.do", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public Object getPrey(@RequestParam(required = false)
+    public Object getPrey(@RequestParam(required = true)
     String page) {
         return mapper.toJson(preyShareDomainService.listPrey(page));
     }
     
     @RequestMapping(value = "/prey/sendprey.do", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public Object sendPrey(@RequestParam(required = false)
-    String loginname,@RequestParam(required = false)
+    public Object sendPrey(@RequestParam(required = true)
+    String loginname,@RequestParam(required = true)
     String prey) {
         return mapper.toJson(preyShareDomainService.sendPrey(loginname, prey));
     }
@@ -47,9 +47,9 @@ public class PreyShareController {
     
     @RequestMapping(value = "/share/sendshare.do", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public Object sendShare(@RequestParam(required = false)
-    String loginname,@RequestParam(required = false)
-    String prey) {
-        return mapper.toJson(preyShareDomainService.sendShare(loginname, prey));
+    public Object sendShare(@RequestParam(required = true)
+    String loginname,@RequestParam(required = true)
+    String share) {
+        return mapper.toJson(preyShareDomainService.sendShare(loginname, share));
     }
 }

@@ -1,5 +1,8 @@
 package com.skymusic.blue.web.mobile;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +31,28 @@ public class CommonController {
     @Autowired
     InfoDomainService infoDomainService;
 
+    @RequestMapping(value = "/bible/gettestamentbybook", method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Object getTestamentByBook(@RequestParam(required = true)
+    String book) {
+        return mapper.toJson(riteBibleDomainService.getTestamentByBook(book));
+    }
+    
+    @RequestMapping(value = "/bible/getchapterbytestament", method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Object geChapterByTestament(@RequestParam(required = true)
+    String book,@RequestParam(required = false)
+    String testament) {
+        return mapper.toJson(riteBibleDomainService.getChapterByTestament(book, testament));
+    }
+    
     @RequestMapping(value = "/bible/getbyparam", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public Object getBibleByParams(@RequestParam(required = false)
+    public Object getBibleByParams(@RequestParam(required = true)
+    String book,@RequestParam(required = false)
     String testament, @RequestParam(required = false)
     String chapter) {
-        return mapper.toJson(riteBibleDomainService.getBibleByParams(testament, chapter));
+        return mapper.toJson(riteBibleDomainService.getBibleByParams(book,testament, chapter));
     }
     
     @RequestMapping(value = "/bible/getbykey", method = {RequestMethod.GET,RequestMethod.POST})
@@ -47,7 +66,20 @@ public class CommonController {
     @ResponseBody
     public Object getRite() {
         return mapper.toJson(riteBibleDomainService.getRiteList());
+
     }
+    
+    @RequestMapping(value = "/rite/getritebyparam", method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Object getRiteByParam(@RequestParam(required = true)
+    String date,@RequestParam(required = true)
+    String ritetype,@RequestParam(required = true)
+    String riteschedule) {
+        return mapper.toJson(riteBibleDomainService.getRiteListByParam(date,ritetype,riteschedule));
+
+    }
+    
+    
     
     @RequestMapping(value = "/info/contact", method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody

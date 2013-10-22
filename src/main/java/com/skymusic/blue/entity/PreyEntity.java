@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class PreyEntity extends IdEntity {
 
     private Date   gmt_create;
-    private User   user;
+    private MobileUser   mobileUser;
     private String memo;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
@@ -27,13 +27,13 @@ public class PreyEntity extends IdEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "login_name")
-    public User getUser() {
-        return user;
+    @JoinColumn(name = "username")
+    public MobileUser getMobileUser() {
+        return mobileUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMobileUser(MobileUser mobileUser) {
+        this.mobileUser = mobileUser;
     }
 
     public String getMemo() {
